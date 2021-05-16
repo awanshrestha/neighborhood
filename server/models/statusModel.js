@@ -9,6 +9,9 @@ const statusSchema = new mongoose.Schema({
         type: String,
         required: "Seriousness is required.",
     },
+    location: {
+        type: String,
+    },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",

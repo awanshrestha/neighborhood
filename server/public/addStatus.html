@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Status</title>
+</head>
+
+<body>
+    <h1>Add New Status</h1>
+    <form id="new-status-form">
+        <input type="text" id="status" placeholder="Status" /> <br><br>
+        <input type="text" id="location" placeholder="Location" /> <br><br>
+        Serious?  <br><br>
+        <input type="radio" id="positive" name="seriousness" value="positive">
+        <label for="positive">Yes</label><br>
+        <input type="radio" id="negative" name="seriousness" value="negative">
+        <label for="negative">No</label><br> <br><br>
+        <input type="submit" value="Add Status" />
+    </form>
+
+    <script>
+
+        Logged()
+        async function Logged(event) {
+            const result = await fetch('/api/checkauth', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((res) => res.json())
+
+            if (result.status === 'ok') {
+               
+            } 
+            else {
+                Redirect()
+            }
+        }
+
+
+        const form = document.getElementById('new-status-form')
+        form.addEventListener('submit', addStatus)
+
+        async function addStatus(event) {
+            event.preventDefault()
+            const title = document.getElementById('status').value
+            const location = document.getElementById('location').value
+            const seriousness = document.querySelector('input[name="seriousness"]:checked').value;
+
+            const result = await fetch('/api/status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    title,
+                    seriousness,
+                    location
+                })
+            }).then((res) => res.json())
+
+            if (result.status === 'ok') {
+                alert('Success')
+                RedirectToSuccess()
+            } else {
+                alert(result.message)
+                console.log(result.message)
+            }
+        }
+        function Redirect() {
+            window.location = "./login.html";
+        }
+        function RedirectToSuccess() {
+            window.location = "./statusAddSuccess.html";
+        }
+    </script>
+</body>
+
+</html>

@@ -1,28 +1,29 @@
 const Status = require('../models/statusModel')
+const User = require('../models/userModel')
 
 exports.getStatus = async (req, res) => {
-    const allStatus = await Status.find({});
+    const allStatus = await Status.find({
+
+    })
+    .sort( { seriousness: -1 } )
+    .populate( {path: 'user', select: 'username'} ).exec()
     if (!allStatus || allStatus.length === 0) throw "No status found";
-    res.json({ data: allStatus });
+
     res.json({
         status: 'ok',
         data: allStatus
     })
-
-    res.json({
-        status: 'ok',
-        message: "User registered successfully."
-    })
 }
 
 exports.addStatus = async (req, res) => {
-    const { title, seriousness } = req.body;
-    if (!title || !seriousness) throw 'All fields not provided.'
+    const { title, seriousness, location } = req.body;
+    if (!title || !seriousness || !location) throw 'All fields not provided.'
     const user = req.payload.id
 
     const newStatus = new Status({
         title,
         seriousness,
+        location,
         user
     })
     await newStatus.save()
