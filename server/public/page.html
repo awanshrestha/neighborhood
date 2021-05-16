@@ -9,15 +9,24 @@
 
 <body>
     <h1>User Page</h1>
-    <p id="status">
-        User not Logged in.
-    </p>
+
     <p>
+        <p id="Usernamehere"></p>
         <a href="/api/logout">Logout</a>
     </p>
 
+    <p>
+        <a href="./addStatus.html">Add Status</a>
+    </p>
+
+    <div id="show-status">
+
+    </div>
+
+
     <script>
         Logged()
+        // GetStatuses()
         async function Logged(event) {
 
             const result = await fetch('/api/checkauth', {
@@ -29,14 +38,56 @@
 
             if (result.status === 'ok') {
                 console.log('Logged In')
-                document.getElementById('status').innerHTML = "User Logged In"
+                document.getElementById('Usernamehere').innerHTML = "Welcome " + result.username
+                GetStatuses()
             } else {
-                alert(result.message)
                 Redirect()
             }
         }
         function Redirect() {
             window.location = "./login.html";
+        }
+
+        async function GetStatuses() {
+
+            const result = await fetch('/api/status', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then((res) => res.json())
+
+            if (result.status === 'ok') {
+                console.log(result.data.length)
+                let divOfStatuses = document.getElementById('show-status')
+
+                for (i = 0; i < result.data.length; i++){
+                    let StatusDiv = document.createElement("div");
+                    let theStatus = document.createElement('p');
+                    let statusWriter = document.createElement('p');
+                    let statusLocation = document.createElement('p');
+                    let statusSeriousness = document.createElement('p');
+
+                    StatusDiv.setAttribute("style","background-color:#54c4854a;border: 1px solid #18D068;border-radius: 14px;padding: 20px 30px;margin-bottom: 20px;");
+                    
+                    StatusDiv.classList.add('claasname');
+
+                    theStatus.innerHTML = result.data[i].title;
+                    statusWriter.innerHTML = "By: " + result.data[i].user.username;
+                    statusLocation.innerHTML = "At: " + result.data[i].location;
+                    statusSeriousness.innerHTML = "Seriousness: " + result.data[i].seriousness;
+
+                    StatusDiv.appendChild(theStatus);
+                    StatusDiv.appendChild(statusWriter);
+                    StatusDiv.appendChild(statusLocation);
+                    StatusDiv.appendChild(statusSeriousness);
+
+                    divOfStatuses.appendChild(StatusDiv);
+                }
+            } 
+            else {
+                    document.getElementById('show-status').innerHTML = "No Statuses"
+                }
         }
     </script>
 </body>

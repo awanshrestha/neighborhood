@@ -13,7 +13,8 @@ router.post('/login', catchErrors(userController.login))
 router.get('/checkauth', auth,  (req, res) => {
     res.json({
         status: 'ok',
-        message: "Authenticated."
+        message: "Authenticated.",
+        username: req.payload.name
     })
 })
 router.get('/logout', catchErrors(userController.logout))
