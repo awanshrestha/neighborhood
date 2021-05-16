@@ -1,0 +1,27 @@
+#first {
+  padding: 5rem 0;
+}
+.image-appartment {
+  height: 54vh;
+  margin-left: 2rem;
+}
+.tech {
+  font-size: 30px;
+  font-weight: 700;
+  text-align: justify;
+  letter-spacing: 1.26px;
+  line-height: 1.3;
+}
+.red {
+  color: #fc729b;
+}
+.neigh-text {
+  text-align: justify;
+  margin: 1rem 0;
+}
+.welcome {
+  font-size: 17.6px;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
