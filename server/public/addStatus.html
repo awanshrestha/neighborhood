@@ -55,8 +55,8 @@
         </div>
       </div>
     </nav>
-    <h1>Add New Status</h1>
-    <form id="new-status-form">
+    <!-- <h1>Add New Status</h1> -->
+    <!-- <form id="new-status-form">
       <input type="text" id="status" placeholder="Status" /> <br /><br />
       <input type="text" id="location" placeholder="Location" /> <br /><br />
       Serious? <br /><br />
@@ -66,7 +66,59 @@
       <label for="negative">No</label><br />
       <br /><br />
       <input type="submit" value="Add Status" />
-    </form>
+    </form> -->
+
+    <div class="width-box">
+      <div class="c2">
+        <form id="new-status-form" class="signup">
+          <h1 class="signup1">Add New Status</h1>
+          <br /><br />
+          <input
+            type="text"
+            id="status"
+            placeholder="Status"
+            class="username"
+          />
+          <input
+            type="text"
+            id="location"
+            placeholder="Location"
+            class="username"
+          />
+          <br />
+          <span
+            style="
+              font-size: 22px;
+              font-weight: 700;
+              margin-left: 4rem;
+              color: #e96673;
+              text-shadow: 1px 1px rgba(0, 0, 0, 0.329);
+            "
+            >Serious?</span
+          >
+
+          <input
+            type="radio"
+            id="positive"
+            name="seriousness"
+            value="positive"
+            style="margin-left: 2rem"
+          />
+          <label for="positive">Yes</label>
+          <input
+            type="radio"
+            id="negative"
+            name="seriousness"
+            value="negative"
+            style="margin-left: 2rem"
+          />
+          <label for="negative">No</label><br />
+          <br />
+
+          <button class="btn" type="submit">Add Status</button>
+        </form>
+      </div>
+    </div>
 
     <footer class="footer">
       <div class="footer-background">
