@@ -73,9 +73,9 @@
                     StatusDiv.classList.add('claasname');
 
                     theStatus.innerHTML = result.data[i].title;
-                    statusWriter.innerHTML = "By " + result.data[i].user.username;
-                    statusLocation.innerHTML = "At " + result.data[i].location;
-                    statusSeriousness.innerHTML = "Seriousness " + result.data[i].seriousness;
+                    statusWriter.innerHTML = "By: " + result.data[i].user.username;
+                    statusLocation.innerHTML = "At: " + result.data[i].location;
+                    statusSeriousness.innerHTML = "Seriousness: " + result.data[i].seriousness;
 
                     StatusDiv.appendChild(theStatus);
                     StatusDiv.appendChild(statusWriter);
