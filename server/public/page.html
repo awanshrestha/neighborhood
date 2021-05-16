@@ -156,10 +156,18 @@
             let statusLocation = document.createElement("p");
             let statusSeriousness = document.createElement("p");
 
-            StatusDiv.setAttribute(
-              "style",
-              "background-color:#54c4854a;border: 1px solid #18D068;border-radius: 14px;padding: 20px 30px;margin-bottom: 20px;"
-            );
+            // StatusDiv.setAttribute(
+            //   "style",
+            //   "border: 1px solid #18D068;border-radius: 14px;padding: 20px 30px;margin-bottom: 20px;"
+            // );
+
+            if (result.data[i].seriousness == "positive"){
+                StatusDiv.setAttribute("style","background-color:#c60c0c40;border: 1px solid #ff0000;border-radius: 14px;padding: 20px 30px;margin-bottom: 20px;box-shadow:2px 2px 10px #000000bf;");
+      
+            }
+            else{
+                StatusDiv.setAttribute("style","background-color:#54c4854a;border: 1px solid #18D068;border-radius: 14px;padding: 20px 30px;margin-bottom: 20px;box-shadow:2px 2px 10px #000000bf;");
+            }
 
             StatusDiv.classList.add("claasname");
 
