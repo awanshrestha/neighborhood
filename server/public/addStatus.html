@@ -1,81 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add New Status</title>
-</head>
+  </head>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="./index.css" />
 
-<body>
+  <body>
+    <nav
+      id="navbar-here"
+      class="navbar navbar-expand-lg navbar-light bg-light px-5"
+      style="padding: 0px"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="./assets/logonei.png" alt="logo" style="height: 72px" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarText"
+          aria-controls="navbarText"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <span class="me-auto" style="opacity: 0"> N </span>
+          <ul class="navbar-nav mb-2 mb-lg-0">
+            <li class="nav-item mx-3">
+              <a class="nav-link active" aria-current="page" href="#first"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item mx-3">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item mx-3">
+              <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item mx-3">
+              <a class="nav-link" href="#">Help</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
     <h1>Add New Status</h1>
     <form id="new-status-form">
-        <input type="text" id="status" placeholder="Status" /> <br><br>
-        <input type="text" id="location" placeholder="Location" /> <br><br>
-        Serious?  <br><br>
-        <input type="radio" id="positive" name="seriousness" value="positive">
-        <label for="positive">Yes</label><br>
-        <input type="radio" id="negative" name="seriousness" value="negative">
-        <label for="negative">No</label><br> <br><br>
-        <input type="submit" value="Add Status" />
+      <input type="text" id="status" placeholder="Status" /> <br /><br />
+      <input type="text" id="location" placeholder="Location" /> <br /><br />
+      Serious? <br /><br />
+      <input type="radio" id="positive" name="seriousness" value="positive" />
+      <label for="positive">Yes</label><br />
+      <input type="radio" id="negative" name="seriousness" value="negative" />
+      <label for="negative">No</label><br />
+      <br /><br />
+      <input type="submit" value="Add Status" />
     </form>
 
+    <footer class="footer">
+      <div class="footer-background">
+        <div class="logo-box">
+          <img src="./assets/ordinary.png" class="logo" />
+        </div>
+        <div class="footer-row">
+          <div class="footer-col-1-by-2">
+            <ul class="footer-list">
+              <li class="footer-items">
+                <a href="#" class="footer-link">About</a>
+              </li>
+              <li class="footer-items">
+                <a href="#" class="footer-link">Info</a>
+              </li>
+              <li class="footer-items">
+                <a href="#" class="footer-link">Report</a>
+              </li>
+              <li class="footer-items">
+                <a href="#" class="footer-link">Contact</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col-1-by-2">
+            <p class="footer-paragraph">
+              The application is @copyright of the company, any misuse of the
+              information will lead to direct consequences and strict punishment
+              by government.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
     <script>
+      Logged();
+      async function Logged(event) {
+        const result = await fetch("/api/checkauth", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((res) => res.json());
 
-        Logged()
-        async function Logged(event) {
-            const result = await fetch('/api/checkauth', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }).then((res) => res.json())
-
-            if (result.status === 'ok') {
-               
-            } 
-            else {
-                Redirect()
-            }
+        if (result.status === "ok") {
+        } else {
+          Redirect();
         }
+      }
 
+      const form = document.getElementById("new-status-form");
+      form.addEventListener("submit", addStatus);
 
-        const form = document.getElementById('new-status-form')
-        form.addEventListener('submit', addStatus)
+      async function addStatus(event) {
+        event.preventDefault();
+        const title = document.getElementById("status").value;
+        const location = document.getElementById("location").value;
+        const seriousness = document.querySelector(
+          'input[name="seriousness"]:checked'
+        ).value;
 
-        async function addStatus(event) {
-            event.preventDefault()
-            const title = document.getElementById('status').value
-            const location = document.getElementById('location').value
-            const seriousness = document.querySelector('input[name="seriousness"]:checked').value;
+        const result = await fetch("/api/status", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            seriousness,
+            location,
+          }),
+        }).then((res) => res.json());
 
-            const result = await fetch('/api/status', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    title,
-                    seriousness,
-                    location
-                })
-            }).then((res) => res.json())
-
-            if (result.status === 'ok') {
-                alert('Success')
-                RedirectToSuccess()
-            } else {
-                alert(result.message)
-                console.log(result.message)
-            }
+        if (result.status === "ok") {
+          alert("Success");
+          RedirectToSuccess();
+        } else {
+          alert(result.message);
+          console.log(result.message);
         }
-        function Redirect() {
-            window.location = "./login.html";
-        }
-        function RedirectToSuccess() {
-            window.location = "./statusAddSuccess.html";
-        }
+      }
+      function Redirect() {
+        window.location = "./login.html";
+      }
+      function RedirectToSuccess() {
+        window.location = "./statusAddSuccess.html";
+      }
     </script>
-</body>
-
+  </body>
 </html>
