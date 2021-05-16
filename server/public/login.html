@@ -1,73 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./index.css" />
     <title>Login</title>
-</head>
+  </head>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="./index.css" />
 
-<body>
-    <h1>Login</h1>
-    <form id="login-form">
-        <input type="email" id="email" placeholder="Email" /> <br><br>
-        <input type="password" id="password" placeholder="Password" /> <br><br>
-        <input type="submit" value="Login" />
-    </form>
+  <body>
+    <nav
+      id="navbar-here"
+      class="navbar navbar-expand-lg navbar-light bg-light px-5"
+      style="padding: 0px"
+    >
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+          <img src="./assets/logonei.png" alt="logo" style="height: 72px" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarText"
+          aria-controls="navbarText"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+          <span class="me-auto" style="opacity: 0"> N </span>
+          <ul class="navbar-nav mb-2 mb-lg-0">
+            <li class="nav-item mx-3">
+              <a class="nav-link active" aria-current="page" href="#first"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item mx-3">
+              <a class="nav-link" href="#">About</a>
+            </li>
+            <li class="nav-item mx-3">
+              <a class="nav-link" href="#">Pricing</a>
+            </li>
+            <li class="nav-item mx-3">
+              <a class="nav-link" href="#">Help</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- <form id="login-form">
+      <input type="email" id="email" placeholder="Email" /> <br /><br />
+      <input type="password" id="password" placeholder="Password" />
+      <br /><br />
+      <input type="submit" value="Login" />
+    </form> -->
+
+    <div class="width-box">
+      <div class="c2">
+        <form class="signup" id="login-form">
+          <h1 class="signup1">LOGIN</h1>
+          <br /><br />
+          <input
+            name="username"
+            type="text"
+            placeholder="Username*"
+            class="username"
+          />
+
+          <input
+            name="email"
+            type="text"
+            id="email"
+            placeholder="Email*"
+            class="username"
+          />
+
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Password*"
+            class="username"
+          />
+
+          <button class="btn" type="submit">Sign IN</button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-background">
+        <div class="logo-box">
+          <img src="./assets/ordinary.png" class="logo" />
+        </div>
+        <div class="footer-row">
+          <div class="footer-col-1-by-2">
+            <ul class="footer-list">
+              <li class="footer-items">
+                <a href="#" class="footer-link">About</a>
+              </li>
+              <li class="footer-items">
+                <a href="#" class="footer-link">Info</a>
+              </li>
+              <li class="footer-items">
+                <a href="#" class="footer-link">Report</a>
+              </li>
+              <li class="footer-items">
+                <a href="#" class="footer-link">Contact</a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="footer-col-1-by-2">
+            <p class="footer-paragraph">
+              The application is @copyright of the company, any misuse of the
+              information will lead to direct consequences and strict punishment
+              by government.
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
 
     <script>
+      Logged();
+      async function Logged(event) {
+        const result = await fetch("/api/checkauth", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).then((res) => res.json());
 
-        Logged()
-        async function Logged(event) {
-            const result = await fetch('/api/checkauth', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            }).then((res) => res.json())
-
-            if (result.status === 'ok') {
-                Redirect()
-            } 
-            // else {
-            //     alert(result.message)
-            // }
+        if (result.status === "ok") {
+          Redirect();
         }
+        // else {
+        //     alert(result.message)
+        // }
+      }
 
+      const form = document.getElementById("login-form");
+      form.addEventListener("submit", login);
 
+      async function login(event) {
+        event.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
 
-        const form = document.getElementById('login-form')
-        form.addEventListener('submit', login)
+        const result = await fetch("/api/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            password,
+          }),
+        }).then((res) => res.json());
 
-        async function login(event) {
-            event.preventDefault()
-            const email = document.getElementById('email').value
-            const password = document.getElementById('password').value
-
-            const result = await fetch('/api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email,
-                    password
-                })
-            }).then((res) => res.json())
-
-            if (result.status === 'ok') {
-                console.log('Got the token: ', result.token)
-                alert('Success')
-                Redirect();
-            } else {
-                alert(result.message)
-            }
+        if (result.status === "ok") {
+          console.log("Got the token: ", result.token);
+          alert("Success");
+          Redirect();
+        } else {
+          alert(result.message);
         }
-        function Redirect() {
-            window.location = "./page.html";
-        }
-        
+      }
+      function Redirect() {
+        window.location = "./page.html";
+      }
     </script>
-</body>
-
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

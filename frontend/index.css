@@ -2,8 +2,8 @@
   padding: 5rem 0;
 }
 .image-appartment {
-  height: 54vh;
-  margin-left: 2rem;
+  height: 52vh;
+  margin-left: 3rem;
 }
 .tech {
   font-size: 30px;
@@ -24,4 +24,19 @@
   font-weight: 800;
   text-transform: uppercase;
   margin-bottom: 1rem;
+}
+.flex-button {
+  margin: 2rem 0;
+}
+.button-in {
+  padding: 11px 18px;
+  border-radius: 2rem;
+  background-color: #fc729b;
+  font-size: 16.6px;
+  font-weight: 700;
+  border: 1px solid pink;
+  color: rgb(253, 246, 234);
+}
+.button-in:hover {
+  background-color: rgb(238, 130, 215);
 }
